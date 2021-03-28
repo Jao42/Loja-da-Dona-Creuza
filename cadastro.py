@@ -5,7 +5,11 @@ def verifCadastro(entrada_usuario, entrada_email, entrada_senha, tela):
   usuario = entrada_usuario.get()
   email = entrada_email.get()
   senha = entrada_senha.get()
-  mensagem = False
+
+  letras = 'abcdefghijklmnopqrstuvwxyz'
+  simb = '.@#_'
+  num = '1234567890'
+  condl = 0; conds = 0; condn = 0;
 
   emailChars = '@.'
   fieldnames = ['usuario', 'email', 'senha']
@@ -23,10 +27,20 @@ def verifCadastro(entrada_usuario, entrada_email, entrada_senha, tela):
       mensagem.pack()
       return 2
 
-    else (len(senha) < 8) or (senha.upper() == senha.lower()) or not any(str(i) in senha any(for i in range(10))):
-      mensagem = Label(tela, text="Para sua segurança pedimos que sua senha tenha pelomenos:\n 8 characteres, uma letra MAIÚSCULA e uma minúscula.", fg="gray", font=("calibri", 11))
-      mensagem.pack()
-      return 3
+    else:
+      for i in senha:
+        if i in simb:
+          conds += 1
+        if i in letras:
+          condl += 1
+        if i in num:
+          condn += 1
+
+
+      if len(senha) < 8 or conds < 1 or condl < 4 or condn < 1:
+        mensagem = Label(tela, text="Senha fraca! Informe uma senha com no mínimo 8 caracteres sendo eles:\nsimbolos(.@#_), números e 4 ou mais letras.", fg="red", font=("calibri", 11))
+        mensagem.pack()
+        return 3
 
   with open('usuarios.csv', 'a', newline='') as usuariosCad:
     writer = csv.DictWriter(usuariosCad, fieldnames=fieldnames)

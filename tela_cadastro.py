@@ -26,7 +26,7 @@ def tela_cadastro(main):
   senha_entrada.pack()
 
 
-  Button(tela_cadastro, text="Entrar", height="2", width="30", command=lambda: verifCadastro(user_entrada, email_entrada, senha_entrada, tela_cadastro)).pack(side=BOTTOM)
+  Button(tela_cadastro, text="Registrar", height="2", width="30", command=lambda: verifCadastro(user_entrada, email_entrada, senha_entrada, tela_cadastro)).pack(side=BOTTOM)
 
 
 

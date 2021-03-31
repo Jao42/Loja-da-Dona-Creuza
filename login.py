@@ -1,20 +1,23 @@
 import csv
+from tkinter import *
 
-def verifLogin(email, usuario, senha):
+def verifLogin(email_usuario, senha, tela):
+  email_usuario = email_usuario.get()
+  senha = senha.get()
 
   with open('usuarios.csv', 'r') as usuariosCad:
     fieldnames = ['usuario', 'email', 'senha']
     reader = csv.DictReader(usuariosCad, fieldnames=fieldnames)
-    if not any((i['usuario'] == usuario and i['email'] == email and i['senha'] == senha) for i in reader):
-      print('algum dado está incorreto, tente novamente!')
+
+    if (not any((i['email'] == email_usuario or i['usuario'] == email_usuario)
+        and i['senha'] == senha for i in reader)):
+      mensagem = Label(tela, text='algum dado está incorreto, tente novamente!', foreground='red')
+      mensagem.pack()
       return 1;
-  print('Bem vindo de volta!')
-  return 0;
+
+  mensagem = Label(tela, text='Bem-vindo de volta!', foreground='green')
+  mensagem.pack()
+  return 0
   
 
 
-email = input('Digite seu email: ')
-usuario = input('Digite seu usuário: ')
-senha = input('Digite sua senha: ')
-
-verifLogin(email, usuario, senha)

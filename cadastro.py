@@ -1,10 +1,11 @@
 import csv
 from tkinter import *
 
-def verifCadastro(entrada_usuario, entrada_email, entrada_senha, tela):
-  usuario = entrada_usuario.get()
-  email = entrada_email.get()
-  senha = entrada_senha.get()
+def verifCadastro(usuario, email, senha, tela):
+
+  usuario = usuario.get()
+  email = email.get()
+  senha = senha.get()
 
   letras = 'abcdefghijklmnopqrstuvwxyz'
   simb = '.@#_'

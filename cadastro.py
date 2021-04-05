@@ -1,47 +1,76 @@
 import csv
 from tkinter import *
+import sqlite3
+
+def verifEmail(email):
+  emailChars = '@.'
+  if (any(i['email'] == email for i in reader) or
+      (email.count('@') > 1) or
+      (email.find('@') == 0) or
+      (email.find('@') > email.rfind('.')) or
+      (email.find('@') == (email.rfind('.') - 1)) or
+      (email.rfind('.') == (len(email) - 1)) or
+      (not all(i in email for i in emailChars))):
+    return 1
+  return 0
+
+
+def verifSenha(senha):
+#no mínimo 8 caracteres incluindo letras, numeros e simbolos.
+
+  num = [str(i) for i in range(10)]
+  condNum = False
+  condSimb = False
+
+  if senha.upper() == senha.lower() or len(senha) < 8:
+    return 1
+
+  for i in senha:
+    if i in num:
+      condNum = True
+
+    elif i.upper() == i.lower(): 
+      condSimb = True
+
+    if condNum and condSimb: 
+      return 0
+
+  return 1
+
+
+def verifUsuario(usuario):
+  if (len(usuario) < 4 or
+      any(i['usuario'] == usuario for i in reader)):
+    return 1
+  return 0
+
 
 def verifCadastro(usuario, email, senha, tela):
+
+  fieldnames = ['usuario', 'email', 'senha']
 
   usuario = usuario.get()
   email = email.get()
   senha = senha.get()
 
-  letras = 'abcdefghijklmnopqrstuvwxyz'
-  simb = '.@#_'
-  num = '1234567890'
-  condl = 0; conds = 0; condn = 0;
-
-  emailChars = '@.'
-  fieldnames = ['usuario', 'email', 'senha']
-
   with open('usuarios.csv', 'r', newline='') as usuariosCad:
     reader = csv.DictReader(usuariosCad, fieldnames=fieldnames)
-    if not all(i in email for i in emailChars) or any(i['email'] == email for i in reader):
+
+    if verifEmail(email, reader):
       mensagem = Label(tela,  text="Email Inválido ou já cadastrado!", fg="red", font=("calibri", 11))
       mensagem.pack()
-
       return 1
 
-    elif (len(usuario) < 4) or any(i['usuario'] == usuario for i in reader):
+    elif verifUsuario(usuario, reader):
       mensagem = Label(tela, text="Usuário Inválido(menos de 4 characteres) ou já cadastrado!", fg="red", font=("calibri", 11))
       mensagem.pack()
       return 2
 
-    else:
-      for i in senha:
-        if i in simb:
-          conds += 1
-        if i in letras:
-          condl += 1
-        if i in num:
-          condn += 1
 
-
-      if len(senha) < 8 or conds < 1 or condl < 4 or condn < 1:
-        mensagem = Label(tela, text="Senha fraca! Informe uma senha com no mínimo 8 caracteres sendo eles:\nsimbolos(.@#_), números e 4 ou mais letras.", fg="red", font=("calibri", 11))
-        mensagem.pack()
-        return 3
+    elif verifSenha(senha, reader):
+      mensagem = Label(tela, text="Senha fraca! Informe uma senha com no mínimo 8 caracteres sendo eles:\nSimbolos, números e letras.", fg="red", font=("calibri", 11))
+      mensagem.pack()
+      return 3
 
   with open('usuarios.csv', 'a', newline='') as usuariosCad:
     writer = csv.DictWriter(usuariosCad, fieldnames=fieldnames)
@@ -49,8 +78,8 @@ def verifCadastro(usuario, email, senha, tela):
   mensagem = Label(tela, text="Usuário registrado com sucesso!", fg="green", font=("calibri", 11))
   mensagem.pack()
   return 0
-      
 
-def unpackTkinter(x):
-  if x:
-    x.destroy()
+
+if __name__ == '__main__':
+  senha = 'KDASPQ1#'
+  print(verifSenha(senha))

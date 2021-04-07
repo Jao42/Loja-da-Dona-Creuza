@@ -2,9 +2,9 @@ import csv
 from tkinter import *
 import sqlite3
 
-def verifEmail(email):
+def verifEmail(email, arq):
   emailChars = '@.'
-  if (any(i['email'] == email for i in reader) or
+  if (any(i['email'] == email for i in arq) or
       (email.count('@') > 1) or
       (email.find('@') == 0) or
       (email.find('@') > email.rfind('.')) or
@@ -38,9 +38,9 @@ def verifSenha(senha):
   return 1
 
 
-def verifUsuario(usuario):
+def verifUsuario(usuario, arq):
   if (len(usuario) < 4 or
-      any(i['usuario'] == usuario for i in reader)):
+      any(i['usuario'] == usuario for i in arq)):
     return 1
   return 0
 
@@ -67,7 +67,7 @@ def verifCadastro(usuario, email, senha, tela):
       return 2
 
 
-    elif verifSenha(senha, reader):
+    elif verifSenha(senha):
       mensagem = Label(tela, text="Senha fraca! Informe uma senha com no mínimo 8 caracteres sendo eles:\nSimbolos, números e letras.", fg="red", font=("calibri", 11))
       mensagem.pack()
       return 3
@@ -79,7 +79,3 @@ def verifCadastro(usuario, email, senha, tela):
   mensagem.pack()
   return 0
 
-
-if __name__ == '__main__':
-  senha = 'KDASPQ1#'
-  print(verifSenha(senha))

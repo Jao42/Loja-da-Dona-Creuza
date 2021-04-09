@@ -1,8 +1,10 @@
 from tkinter import *
 from tkinter import ttk
 
-def telaProdutos():
-  tela = Tk()
+
+def telaProdutos(tela_login):
+
+  tela = Toplevel(tela_login)
 
   screenWidth = tela.winfo_screenwidth()
   screenHeight = tela.winfo_screenheight()

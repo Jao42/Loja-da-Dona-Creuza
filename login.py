@@ -1,6 +1,7 @@
 import csv
 from tkinter import *
 import bcrypt
+from tela_produtos import *
 
 def verifLogin(email_usuario, senha, tela):
   email_usuario = email_usuario.get()
@@ -17,8 +18,7 @@ def verifLogin(email_usuario, senha, tela):
       mensagem.pack()
       return 1;
 
-  mensagem = Label(tela, text='Bem-vindo de volta!', foreground='green')
-  mensagem.pack()
+  telaProdutos(tela) 
   return 0
   
 

@@ -15,12 +15,16 @@ def verifLogin(email_usuario, senha, tela):
   hashSenha = cursor.fetchone()
   conexao.commit()
   conexao.close()
+  if not hashSenha:
+    mensagem = Label(tela, text='Usuário não cadastrado!', foreground='red')
+    mensagem.pack()
+    return 1
   confirmacaoSenha = bcrypt.checkpw(senha.encode(),  hashSenha[0].encode())
-  if hashSenha and confirmacaoSenha:
+  if confirmacaoSenha:
     telaProdutos(tela)
     return 0
   
-  mensagem = Label(tela, text='algum dado está incorreto, tente novamente!', foreground='red')
+  mensagem = Label(tela, text='Senha incorreta!', foreground='red')
   mensagem.pack()
   return 1
 

@@ -1,6 +1,15 @@
 import csv
 from tkinter import *
 import sqlite3
+import bcrypt
+
+def hashSenha(senha):
+
+  salt = bcrypt.gensalt(10)
+  senha = senha.encode('utf-8')
+  senhaHash = bcrypt.hashpw(senha, salt)
+  return senhaHash
+
 
 def verifEmail(email, arq):
   emailChars = '@.'
@@ -74,7 +83,9 @@ def verifCadastro(usuario, email, senha, tela):
 
   with open('usuarios.csv', 'a', newline='') as usuariosCad:
     writer = csv.DictWriter(usuariosCad, fieldnames=fieldnames)
-    writer.writerow({'usuario': usuario, 'email': email, 'senha': senha})
+    senhaHashed = hashSenha(senha)
+    senhaHashed = senhaHashed.decode()
+    writer.writerow({'usuario': usuario, 'email': email, 'senha': senhaHashed})
   mensagem = Label(tela, text="Usuário registrado com sucesso!", fg="green", font=("calibri", 11))
   mensagem.pack()
   return 0

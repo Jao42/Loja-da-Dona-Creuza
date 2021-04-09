@@ -1,25 +1,28 @@
 import csv
 from tkinter import *
 import bcrypt
+import sqlite3 
 from tela_produtos import *
 
 def verifLogin(email_usuario, senha, tela):
   email_usuario = email_usuario.get()
   senha = senha.get()
-  senha = senha.encode()
 
-  with open('usuarios.csv', 'r') as usuariosCad:
-    fieldnames = ['usuario', 'email', 'senha']
-    reader = csv.DictReader(usuariosCad, fieldnames=fieldnames)
+  conexao = sqlite3.connect('db-loja.db')
+  cursor = conexao.cursor()
 
-    if (not any((i['email'] == email_usuario or i['usuario'] == email_usuario)
-        and bcrypt.checkpw(senha, i['senha'].encode())for i in reader)):
-      mensagem = Label(tela, text='algum dado está incorreto, tente novamente!', foreground='red')
-      mensagem.pack()
-      return 1;
-
-  telaProdutos(tela) 
-  return 0
+  cursor.execute(f"SELECT senha FROM usuarios WHERE email = '{email_usuario}' OR usuario = '{email_usuario}' ")
+  hashSenha = cursor.fetchone()
+  conexao.commit()
+  conexao.close()
+  confirmacaoSenha = bcrypt.checkpw(senha.encode(),  hashSenha[0].encode())
+  if hashSenha and confirmacaoSenha:
+    telaProdutos(tela)
+    return 0
   
+  mensagem = Label(tela, text='algum dado está incorreto, tente novamente!', foreground='red')
+  mensagem.pack()
+  return 1
+
 
 

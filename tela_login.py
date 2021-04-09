@@ -21,5 +21,5 @@ def tela_login(main):
   senha_entrada.pack()
 
 
-  Button(tela_login, text="Login", height="2", width="30", command=lambda: verifLogin(email_usuario, senha, tela_login)).pack(side=BOTTOM)
+  Button(tela_login, text="Login", height="2", width="30", command=lambda: displayVerifLogin(email_usuario, senha, tela_login)).pack(side=BOTTOM)
 

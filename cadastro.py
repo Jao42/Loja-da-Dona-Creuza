@@ -2,6 +2,7 @@ import csv
 from tkinter import *
 import sqlite3
 import bcrypt
+from mensagem import mensagemPadrao
 
 def hashSenha(senha):
 
@@ -16,7 +17,8 @@ def verifEmail(email, conexao):
   cursor = conexao.cursor()
   cursor.execute(f"SELECT email FROM usuarios WHERE email = '{email}'")
   existencia = cursor.fetchone()
-  
+  conexao.commit()
+
   if ((existencia) or
       (email.count('@') > 1) or
       (email.find('@') == 0) or
@@ -27,8 +29,6 @@ def verifEmail(email, conexao):
 
     conexao.close()
     return 1
-
-  conexao.commit()
   return 0
 
 
@@ -59,71 +59,65 @@ def verifUsuario(usuario, conexao):
   cursor = conexao.cursor()
   cursor.execute(f"SELECT usuario FROM usuarios WHERE usuario = '{usuario}'")
   existencia = cursor.fetchone()
+  conexao.commit()
 
   if (len(usuario) < 4 or
       existencia):
     conexao.close()
     return 1
 
-  conexao.commit()
   return 0
 
 
-
-
-def verifCadastro(usuario, email, senha, tela):
-
+def verifCadastro(usuario, email, senha):
   conexao = sqlite3.connect('db-loja.db')
-  cursor = conexao.cursor()
 
-  fieldnames = ['usuario', 'email', 'senha']
+  if verifEmail(email, conexao):
+    return 1
+
+  if verifUsuario(usuario, conexao):
+    return 2
+
+  if verifSenha(senha):
+    return 3
+
+  conexao.close()
+  return 0
+
+
+def cadastro(usuario, email, senha, tela):
 
   usuario = usuario.get()
   email = email.get()
   senha = senha.get()
 
+  if displayVerifCadastro(usuario, email, senha, tela) == 0:
+    conexao = sqlite3.connect('db-loja.db')
+    cursor = conexao.cursor()
 
-  if verifEmail(email, conexao):
-    mensagem = Label(tela,  text="Email Inválido ou já cadastrado!", fg="red", font=("calibri", 11))
-    mensagem.pack()
+    senhaHashed = hashSenha(senha)
+    cursor.execute(f"INSERT INTO usuarios VALUES ('{usuario}', '{email}', '{senhaHashed}')")
+    conexao.commit()
+    conexao.close()
+    return 0
+
+  return 1
+
+
+def displayVerifCadastro(usuario, email, senha, tela):
+  retornoVerifCadastro = verifCadastro(usuario, email, senha)
+
+  if retornoVerifCadastro == 1:
+    mensagemPadrao('Email Inválido ou já cadastrado!', 'red', tela)
     return 1
-
-  elif verifUsuario(usuario, conexao):
-    mensagem = Label(tela, text="Usuário Inválido(menos de 4 characteres) ou já cadastrado!", fg="red", font=("calibri", 11))
-    mensagem.pack()
+  if retornoVerifCadastro == 2:
+    mensagemPadrao('Usuário Inválido(menos de 4 characteres) ou já cadastrado!', 'red', tela)
     return 2
-
-
-  elif verifSenha(senha):
-    mensagem = Label(tela, text="Senha fraca! Informe uma senha com no mínimo 8 caracteres sendo eles:\nSimbolos, números e letras.", fg="red", font=("calibri", 11))
-    mensagem.pack()
+  if retornoVerifCadastro == 3:
+    mensagemPadrao('Senha fraca! Informe uma senha com no mínimo 8 caracteres sendo eles:\nSimbolos, números e letras.', 'red', tela)
     return 3
 
-  senhaHashed = hashSenha(senha)
-
-  cursor.execute(f"INSERT INTO usuarios VALUES ('{usuario}', '{email}', '{senhaHashed}')")
-  conexao.commit()
-  conexao.close()
-
-  mensagem = Label(tela, text="Usuário registrado com sucesso!", fg="green", font=("calibri", 11))
-  mensagem.pack()
+  mensagemPadrao('Usuário registrado com sucesso!', 'green', tela)
   return 0
 
-
-if __name__ == '__main__':
-  senha = 'testesenha123'
-  conexao = sqlite3.connect('db-loja.db')
-
-  #c = conexao.cursor()
-
-  #usuarios = [('tadeu', 'tadeuo@email.com', senhaHashed)]
-  #c.executemany("INSERT INTO usuarios VALUES (?, ?, ?)", usuarios)
-  #c.execute("SELECT senha FROM usuarios WHERE usuario = 'taideu'")
-  #print(c.fetchone())
-
-  #conexao.commit()
-  #conexao.close()
-
-
-  
 

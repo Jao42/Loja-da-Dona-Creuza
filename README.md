@@ -10,18 +10,18 @@ Devs: [@geoaugusto](https://github.com/geoaugusto), @Ana clara, [@Jao42](https:/
 
 ### Lojinha da Dona Creuza v0.5
 
-- [ ] Sistema de Cadastro
+- [x] Sistema de Cadastro
   - [x] Interface Gráfica do Usuário
-  - [ ] Lógica
+  - [x] Lógica
     - [x] Verif. de validade dos campos
     - [x] Inserção na base de dados
     - [x] Integração com a Interface
-- [ ] Sistema de Login
-    - [ ] Interface Gráfica do Usuário
-    - [ ] Lógica
+- [x] Sistema de Login
+    - [x] Interface Gráfica do Usuário
+    - [x] Lógica
       - [x] Verif. de validade dos campos
       - [x] Consumo da base de dados
-      - [ ] Integração com a Interface
+      - [x] Integração com a Interface
 - [ ] Sistema de Controle de Estoque
   - [ ] Interface Gráfica do Usuário
   - [ ] Lógica

@@ -1,9 +1,12 @@
 from tkinter import *
 from cadastro import *
+from centralizar_tela import *
 
 def tela_cadastro(main):
   tela_cadastro = Toplevel(main)
-  tela_cadastro.geometry("600x500")
+
+  centralizarTela(tela_cadastro, 600, 500)
+
   tela_cadastro.title("Registro")
 
   email = StringVar()

@@ -1,22 +1,14 @@
 from tkinter import *
 from tkinter import ttk
-
+from centralizar_tela import *
 
 def telaProdutos(tela_login):
 
   tela = Toplevel(tela_login)
 
-  screenWidth = tela.winfo_screenwidth()
-  screenHeight = tela.winfo_screenheight()
+  centralizarTela(tela, 600, 500)
 
-  width = 600
-  height = 500
-
-  x = int((screenWidth/2) - (width/2))
-  y = int((screenHeight/2) - (height/2))
-
-  tela.geometry(f'{width}x{height}+{x}+{y}')
-  tela.title('Estoque')
+  tela.title('estoque')
 
   #relief --> estilo da borda
 

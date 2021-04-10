@@ -1,11 +1,13 @@
 from tkinter import *
 from tela_cadastro import *
 from tela_login import *
-
+from centralizar_tela import *
 
 def tela_inicial():
   tela_inicial = Tk()
-  tela_inicial.geometry("600x500")
+
+  centralizarTela(tela_inicial, 600, 500)
+
   tela_inicial.title("Lojinha da Dona Creuza :)")
   Label(text="Bem Vindo a Lojinha da Dona Creuza!", height="4").pack()
 

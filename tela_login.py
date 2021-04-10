@@ -1,9 +1,12 @@
 from tkinter import *
 from login import *
+from centralizar_tela import *
 
 def tela_login(main):
   tela_login = Toplevel(main)
-  tela_login.geometry("600x500")
+
+  centralizarTela(tela_login, 600, 500)
+
   tela_login.title("Login")
 
   email_usuario = StringVar()

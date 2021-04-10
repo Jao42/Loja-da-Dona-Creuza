@@ -23,10 +23,12 @@ Devs: [@geoaugusto](https://github.com/geoaugusto), @Ana clara, [@Jao42](https:/
       - [x] Consumo da base de dados
       - [x] Integração com a Interface
 - [ ] Sistema de Controle de Estoque
-  - [ ] Interface Gráfica do Usuário
+  - [x] Interface Gráfica do Usuário
+    - [x] Tela admin
+    - [x] Tela usuário comum 
   - [ ] Lógica
     - [ ] Inserção na base de dados
-    - [ ] Consumo da base de dados
+    - [x] Consumo da base de dados
     - [ ] Integração com a Interface
 
    

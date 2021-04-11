@@ -2,8 +2,8 @@ from tkinter import *
 from login import *
 from centralizar_tela import *
 
-def tela_login(main):
-  tela_login = Toplevel(main)
+def telaLogin(tela_login):
+  tela_login = Toplevel(tela_login)
 
   centralizarTela(tela_login, 600, 500)
 

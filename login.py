@@ -3,7 +3,9 @@ from tkinter import *
 import bcrypt
 import sqlite3 
 from tela_produtos import *
+from tela_admin import telaAdmin
 from mensagem import mensagemPadrao
+
 
 def verifLogin(email_usuario, senha):
   email_usuario = email_usuario.get()
@@ -38,6 +40,9 @@ def displayVerifLogin(email_usuario, senha, tela):
     mensagemPadrao('Senha incorreta!', 'red', tela)
     return 2
   mensagemPadrao('Logado com sucesso!', 'green', tela)
-  telaProdutos(tela)
+  if email_usuario.get() != 'admin' and email_usuario.get() != 'admin@admin.com':
+    telaProdutos(tela)
+  else:
+    telaAdmin(tela)
   return 0
 

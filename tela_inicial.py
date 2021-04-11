@@ -19,7 +19,7 @@ def tela_inicial():
   Label(text="Se já se registrou, clique em \"Login\" :)").pack()
 
   Button(text="Registrar", height="2", width="30", command=lambda: tela_cadastro(tela_inicial)).pack(side=BOTTOM)
-  Button(text="Login", height="2", width="30", command=lambda: tela_login(tela_inicial)).pack(side=BOTTOM)
+  Button(text="Login", height="2", width="30", command=lambda: telaLogin(tela_inicial)).pack(side=BOTTOM)
   tela_inicial.mainloop()
 tela_inicial()
 

@@ -120,4 +120,3 @@ def displayVerifCadastro(usuario, email, senha, tela):
   mensagemPadrao('Usuário registrado com sucesso!', 'green', tela)
   return 0
 
-

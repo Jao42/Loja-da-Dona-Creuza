@@ -27,8 +27,9 @@ Devs: [@geoaugusto](https://github.com/geoaugusto), @Ana clara, [@Jao42](https:/
     - [x] Tela admin
     - [x] Tela usuário comum 
   - [ ] Lógica
-    - [ ] Inserção na base de dados
     - [x] Consumo da base de dados
+    - [x] Inserção na base de dados
+    - [x] Remoção na base de dados
     - [ ] Integração com a Interface
 
    

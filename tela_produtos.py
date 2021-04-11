@@ -1,11 +1,10 @@
 from tkinter import *
 from tkinter import ttk
-from centralizar_tela import *
-from produtos import tableProdutos
+from centralizar_tela import centralizarTela
+from produtos import tableProdutos, rmProdutoTable
 import sqlite3
 
 def telaProdutos(tela_login):
-
   tela = Toplevel(tela_login)
   centralizarTela(tela, 600, 500)
   tela.title('estoque')
@@ -41,5 +40,6 @@ def telaProdutos(tela_login):
   tree.column('#2', anchor="center", minwidth=0, width=250)
 
   tableProdutos(tree, body)
-  tela.mainloop()
+  Button(tela, text="COMPRAR", command=lambda:rmProdutoTable(tree)).pack(side=BOTTOM)
 
+  tela.mainloop()

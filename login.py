@@ -30,16 +30,19 @@ def verifLogin(email_usuario, senha):
   return 2
 
 
-def displayVerifLogin(email_usuario, senha, tela):
+def displayVerifLogin(email_usuario, senha, tela, label):
   verifRetorno = verifLogin(email_usuario, senha)
 
   if verifRetorno == 1:
-    mensagemPadrao('Usuário não cadastrado!', 'red', tela)
+    label['foreground'] = 'red'
+    label['text'] = 'Usuário não cadastrado!'
     return 1
   if verifRetorno == 2:
-    mensagemPadrao('Senha incorreta!', 'red', tela)
+    label['foreground'] = 'red'
+    label['text'] = 'Senha Incorreta!'
     return 2
-  mensagemPadrao('Logado com sucesso!', 'green', tela)
+  label['foreground'] = 'green'
+  label['text'] = 'Logado com sucesso!'
   if email_usuario.get() != 'admin' and email_usuario.get() != 'admin@admin.com':
     telaProdutos(tela)
   else:

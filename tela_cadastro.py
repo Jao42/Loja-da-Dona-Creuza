@@ -28,8 +28,13 @@ def tela_cadastro(main):
   label_senha.pack()
   senha_entrada.pack()
 
+  label_mensagem = Label(tela_cadastro)
+  
+  Button(tela_cadastro,
+      text="Registrar",
+      height="2",
+      width="30",
+      command=lambda: cadastro(user, email, senha, tela_cadastro, label_mensagem)).pack(side=BOTTOM)
 
-  Button(tela_cadastro, text="Registrar", height="2", width="30", command=lambda: cadastro(user, email, senha, tela_cadastro)).pack(side=BOTTOM)
-
-
+  label_mensagem.pack()
 

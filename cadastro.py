@@ -85,13 +85,13 @@ def verifCadastro(usuario, email, senha):
   return 0
 
 
-def cadastro(usuario, email, senha, tela):
+def cadastro(usuario, email, senha, tela, labelMensagem):
 
   usuario = usuario.get()
   email = email.get()
   senha = senha.get()
 
-  if displayVerifCadastro(usuario, email, senha, tela) == 0:
+  if displayVerifCadastro(usuario, email, senha, tela, labelMensagem) == 0:
     conexao = sqlite3.connect('db-loja.db')
     cursor = conexao.cursor()
 
@@ -104,19 +104,24 @@ def cadastro(usuario, email, senha, tela):
   return 1
 
 
-def displayVerifCadastro(usuario, email, senha, tela):
+def displayVerifCadastro(usuario, email, senha, tela, label):
   retornoVerifCadastro = verifCadastro(usuario, email, senha)
 
   if retornoVerifCadastro == 1:
-    mensagemPadrao('Email Inválido ou já cadastrado!', 'red', tela)
+    label['text'] = 'Email Inválido ou já cadastrado!'
+    label['foreground'] = 'red'
     return 1
   if retornoVerifCadastro == 2:
-    mensagemPadrao('Usuário Inválido(menos de 4 characteres) ou já cadastrado!', 'red', tela)
+    label['text'] = 'Usuário Inválido(menos de 4 characteres) ou já cadastrado!' 
+    label['foreground'] = 'red'
     return 2
   if retornoVerifCadastro == 3:
-    mensagemPadrao('Senha fraca! Informe uma senha com no mínimo 8 caracteres sendo eles:\nSimbolos, números e letras.', 'red', tela)
+    label['text'] = 'Senha fraca! Informe uma senha com no mínimo 8 caracteres sendo eles:\nSimbolos, números e letras.' 
+    label['foreground'] = 'red'
     return 3
 
-  mensagemPadrao('Usuário registrado com sucesso!', 'green', tela)
+  label['text'] = 'Usuário registrado com sucesso!'
+  label['foreground'] = 'green'
+
   return 0
 

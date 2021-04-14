@@ -8,7 +8,8 @@ def createTableProdutos():
   cursor = conexao.cursor()
   cursor.execute("""CREATE TABLE produtos (
     nome text,
-    preco integer
+    preco integer,
+    quantidade integer
   )""")
   conexao.commit()
   conexao.close()
@@ -20,18 +21,25 @@ def dropTableProdutos():
   conexao.commit()
   conexao.close()
 
-def addProdutoTable(nome, preco):
+def addProdutoTable(nome, preco, qtd, label):
   conexao = sqlite3.connect("db-loja.db")
   cursor = conexao.cursor()
-  cursor.execute(f"SELECT nome, preco FROM produtos WHERE nome='{nome}' AND preco='{preco}'")
+  cursor.execute(f"SELECT nome FROM produtos WHERE nome='{nome}'")
   existencia = cursor.fetchone()
   conexao.commit()
+  
   if not existencia:
-    cursor.execute(f"INSERT INTO produtos VALUES ('{nome}', '{preco}')")
+    cursor.execute(f"INSERT INTO produtos VALUES ('{nome}', '{preco}', '{qtd}')")
     conexao.commit()
     conexao.close()
+
+    label['text'] = 'Produto cadastrado com sucesso!'
+    label['fg'] = 'green'
     return 0
+
   conexao.close()
+  label['text'] = 'Produto já cadastrado!'
+  label['fg'] = 'red'
   return 1
 
 def rmProdutoTable(tree):
@@ -39,11 +47,10 @@ def rmProdutoTable(tree):
 
   if itemIID:
     nomeProduto = tree.item(itemIID)['values'][0]
-    precoProduto = tree.item(itemIID)['values'][1]
 
     conexao = sqlite3.connect("db-loja.db")
     cursor = conexao.cursor()
-    cursor.execute(f"DELETE FROM produtos WHERE nome='{nomeProduto}' AND preco={precoProduto}")
+    cursor.execute(f"DELETE FROM produtos WHERE nome='{nomeProduto}'")
     conexao.commit()
     conexao.close()
 
@@ -51,6 +58,31 @@ def rmProdutoTable(tree):
     return 0
 
   return 1
+
+def comprarProduto(tree):
+  itemIID = tree.focus()
+  itemValues = tree.item(itemIID)['values']
+
+  qtd = int(itemValues[3])
+  if qtd == 1:
+    rmProdutoTable(tree)   
+    return 0
+   
+  nome = itemValues[0]
+  preco = itemValues[1]
+  conexao = sqlite3.connect("db-loja.db")
+  cursor = conexao.cursor()
+  cursor.execute(f"""UPDATE produtos SET quantidade='{qtd - 1}'
+        WHERE nome='{nome}' AND preco='{preco}' AND quantidade='{qtd}'
+      
+      """)
+  conexao.commit()
+  conexao.close()
+
+  tree.item(itemIID, text="", values=(itemValues[0], itemValues[1], itemValues[2], str(qtd - 1)))
+  return 0
+
+
   
 def promocao(inicio, fim):
   hora = localtime().tm_hour
@@ -72,7 +104,7 @@ def tableProdutos(tree, body, horaPromocao):
     promocaoProduto = ''
     if horaPromocao and i[1] >= 5:
       promocaoProduto = int(i[1] * (1 - 0.2))
-    tree.insert('', 'end', values=(i[0], str(i[1]), str(promocaoProduto)))
+    tree.insert('', 'end', values=(i[0], str(i[1]), str(promocaoProduto), str(i[2])))
     
 
   body.pack()
@@ -84,8 +116,3 @@ def tableProdutos(tree, body, horaPromocao):
   return produtos
 
 
-if __name__ == '__main__':
-  addProdutoTable('sabao', 4)
-  addProdutoTable('monark da boa', 20)
-  addProdutoTable('outfit da lacoste', 10)
-  addProdutoTable('velharia', 2)

@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 from centralizar_tela import centralizarTela
-from produtos import tableProdutos, rmProdutoTable, promocao
+from produtos import tableProdutos, comprarProduto, promocao
 import sqlite3
 from time import localtime
 
@@ -21,7 +21,7 @@ def telaProdutos(tela_login):
   #relief --> estilo da borda
 
   body = Frame(tela, borderwidth=2, relief='solid') 
-  tabelaItems=['nome', 'preco', 'promocao']
+  tabelaItems=['nome', 'preco', 'promocao', 'qtd']
 
 #selectmode -> quantos items seleciona com mouse
 #treeView heigth -> quantas rows
@@ -29,9 +29,8 @@ def telaProdutos(tela_login):
   scrollbarX = Scrollbar(body, orient=HORIZONTAL)
 
   tree = ttk.Treeview(
-      body, columns=(tabelaItems[0], tabelaItems[1], tabelaItems[2]), selectmode="extended", height=5,
-      yscrollcommand=scrollbarY.set, xscrollcommand=scrollbarX.set
-      )
+      body, columns=(tabelaItems[0], tabelaItems[1], tabelaItems[2], tabelaItems[3]), selectmode="extended", height=5,
+      yscrollcommand=scrollbarY.set, xscrollcommand=scrollbarX.set)
 
   scrollbarY.config(command=tree.yview)
   scrollbarX.config(command=tree.xview)
@@ -44,16 +43,18 @@ def telaProdutos(tela_login):
   tree.heading(tabelaItems[0], text=tabelaItems[0])
   tree.heading(tabelaItems[1], text=tabelaItems[1])
   tree.heading(tabelaItems[2], text=tabelaItems[2])
+  tree.heading(tabelaItems[3], text=tabelaItems[3])
 
   tree.column('#0', minwidth=0, width=0)
   tree.column('#1', anchor="center", minwidth=0, width=200)
-  tree.column('#2', anchor="center", minwidth=0, width=200)
+  tree.column('#2', anchor="center", minwidth=0, width=150)
   tree.column('#3', anchor="center", minwidth=0, width=100)
+  tree.column('#4', anchor="center", minwidth=0, width=50)
 
   horaPromocao = bool(promocao(8, 10))
   tableProdutos(tree, body, horaPromocao)
 
-  Button(tela, text="COMPRAR", command=lambda:rmProdutoTable(tree)).pack(side=BOTTOM)
+  Button(tela, text="COMPRAR", command=lambda:comprarProduto(tree)).pack(side=BOTTOM)
   
   promocaoLabel = Label(tela)
   promocaoLabel.pack()
@@ -62,3 +63,6 @@ def telaProdutos(tela_login):
     promocaoLabel['fg'] = 'blue'
   tela.mainloop()
 
+
+if __name__ == '__main__':
+  telaProdutos()

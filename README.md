@@ -22,11 +22,11 @@ Devs: [@geoaugusto](https://github.com/geoaugusto), @Ana clara, [@Jao42](https:/
       - [x] Verif. de validade dos campos
       - [x] Consumo da base de dados
       - [x] Integração com a Interface
-- [ ] Sistema de Controle de Estoque
+- [x] Sistema de Controle de Estoque
   - [x] Interface Gráfica do Usuário
     - [x] Tela admin
     - [x] Tela usuário comum 
-  - [ ] Lógica
+  - [x] Lógica
     - [x] Consumo da base de dados
     - [x] Inserção na base de dados
     - [x] Remoção na base de dados

@@ -52,9 +52,15 @@ def rmProdutoTable(tree):
 
   return 1
   
-  
+def promocao(inicio, fim):
+  hora = localtime().tm_hour
+  if not (hora >= inicio and hora <= fim):
+    return 1
+  else:
+    return 0
 
-def tableProdutos(tree, body):
+
+def tableProdutos(tree, body, horaPromocao):
   conexao = sqlite3.connect("db-loja.db")
   cursor = conexao.cursor()
   cursor.execute("SELECT * FROM produtos")
@@ -62,7 +68,12 @@ def tableProdutos(tree, body):
   produtos = cursor.fetchall()
 
   for i in produtos:
-    tree.insert('', 'end', values=(i[0], str(i[1])))
+
+    promocaoProduto = ''
+    if horaPromocao and i[1] >= 5:
+      promocaoProduto = int(i[1] * (1 - 0.2))
+    tree.insert('', 'end', values=(i[0], str(i[1]), str(promocaoProduto)))
+    
 
   body.pack()
   tree.pack(side=BOTTOM)

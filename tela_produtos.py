@@ -4,6 +4,7 @@ from centralizar_tela import centralizarTela
 from produtos import tableProdutos, comprarProduto, promocao
 import sqlite3
 from time import localtime
+import config
 
 def promocao(inicio, fim):
   hora = localtime().tm_hour
@@ -15,6 +16,7 @@ def promocao(inicio, fim):
 
 def telaProdutos(tela_login):
   tela = Toplevel(tela_login)
+  tela.configure(bg=config.COR_BG)
   centralizarTela(tela, 600, 500)
   tela.title('estoque')
 
@@ -61,6 +63,7 @@ def telaProdutos(tela_login):
   if horaPromocao:
     promocaoLabel['text'] = 'PROMOÇÃO! Produtos com mais de 20% de desconto!'
     promocaoLabel['fg'] = 'blue'
+    promocaoLabel['bg'] = config.COR_BG
   tela.mainloop()
 
 

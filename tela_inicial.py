@@ -21,7 +21,8 @@ def telaInicial():
 
   Label(image=imagem,
       bg=config.COR_BG,
-      ).place(x=40, y=150)
+      bd=2,
+      relief='solid').place(x=40, y=150)
 
   Label(text="Essa é a Dona Creuza :3", 
       fg="Black", 

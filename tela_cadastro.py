@@ -5,8 +5,8 @@ import config
 
 
 
-def telaCadastro():
-  tela_cadastro = Tk() 
+def telaCadastro(tela_inicial):
+  tela_cadastro = Toplevel(tela_inicial)
   tela_cadastro.configure(bg=config.COR_BG)
 
   centralizarTela(tela_cadastro, 600, 500)
@@ -46,4 +46,3 @@ def telaCadastro():
   tela_cadastro.mainloop()
 
 
-telaCadastro()

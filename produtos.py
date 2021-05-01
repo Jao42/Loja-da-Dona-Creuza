@@ -1,7 +1,8 @@
 import sqlite3
 from tkinter import *
 from tkinter import ttk
-
+from time import localtime
+from math import ceil
 
 def createTableProdutos():
   conexao = sqlite3.connect("db-loja.db")
@@ -86,7 +87,7 @@ def comprarProduto(tree):
   
 def promocao(inicio, fim):
   hora = localtime().tm_hour
-  if not (hora >= inicio and hora <= fim):
+  if hora >= inicio and hora < fim:
     return 1
   else:
     return 0
@@ -96,23 +97,25 @@ def tableProdutos(tree, body, horaPromocao):
   conexao = sqlite3.connect("db-loja.db")
   cursor = conexao.cursor()
   cursor.execute("SELECT * FROM produtos")
-
   produtos = cursor.fetchall()
+
+  promocao = 1 - 20/100
+  valorMinimo = ceil(1/promocao)
+  cursor.execute(f"SELECT preco FROM produtos WHERE preco >= {valorMinimo}")
+  temProdutoPromocao = bool(cursor.fetchall())
+  conexao.commit()
+  conexao.close()
 
   for i in produtos:
 
     promocaoProduto = ''
-    if horaPromocao and i[1] >= 5:
-      promocaoProduto = int(i[1] * (1 - 0.2))
+    if horaPromocao and i[1] >= valorMinimo:
+      promocaoProduto = int(i[1] * promocao)
     tree.insert('', 'end', values=(i[0], str(i[1]), str(promocaoProduto), str(i[2])))
-    
 
   body.pack()
   tree.pack(side=BOTTOM)
 
-  conexao.commit()
-  conexao.close()
-
-  return produtos
+  return temProdutoPromocao 
 
 

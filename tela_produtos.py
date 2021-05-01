@@ -3,14 +3,8 @@ from tkinter import ttk
 from centralizar_tela import centralizarTela
 from produtos import tableProdutos, comprarProduto, promocao
 import sqlite3
-from time import localtime
 import config
 
-def promocao(inicio, fim):
-  hora = localtime().tm_hour
-  if not (hora >= inicio and hora < fim):
-    return 0
-  return 1
 
 def telaProdutos():
   tela = Toplevel()
@@ -51,14 +45,14 @@ def telaProdutos():
   tree.column('#3', anchor="center", minwidth=0, width=100)
   tree.column('#4', anchor="center", minwidth=0, width=50)
 
-  horaPromocao = bool(promocao(8, 10))
-  tableProdutos(tree, body, horaPromocao)
+  horaPromocao = promocao(8, 18)
+  temProdutoPromocao = tableProdutos(tree, body, horaPromocao)
 
   Button(tela, text="COMPRAR", command=lambda:comprarProduto(tree)).pack(side=BOTTOM)
   
-  promocaoLabel = Label(tela)
+  promocaoLabel = Label(tela, bg=config.COR_BG)
   promocaoLabel.pack()
-  if horaPromocao:
+  if horaPromocao and temProdutoPromocao:
     promocaoLabel['text'] = 'PROMOÇÃO! Produtos com mais de 20% de desconto!'
     promocaoLabel['fg'] = 'blue'
     promocaoLabel['bg'] = config.COR_BG

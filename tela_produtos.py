@@ -12,10 +12,8 @@ def promocao(inicio, fim):
     return 0
   return 1
 
-     
-
-def telaProdutos(tela_login):
-  tela = Toplevel(tela_login)
+def telaProdutos():
+  tela = Toplevel()
   tela.configure(bg=config.COR_BG)
   centralizarTela(tela, 600, 500)
   tela.title('estoque')

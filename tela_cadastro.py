@@ -5,8 +5,8 @@ import config
 
 
 
-def telaCadastro(tela_inicial):
-  tela_cadastro = Toplevel(tela_inicial)
+def telaCadastro():
+  tela_cadastro = Toplevel()
   tela_cadastro.configure(bg=config.COR_BG)
 
   centralizarTela(tela_cadastro, 600, 500)
@@ -42,7 +42,7 @@ def telaCadastro(tela_inicial):
       text="Registrar",
       height="2",
       width="30",
-      command=lambda: cadastro(user, email, senha, tela_cadastro, label_mensagem)).pack(side=BOTTOM)
+      command=lambda: cadastro(user, email, senha, label_mensagem)).pack(side=BOTTOM)
   tela_cadastro.mainloop()
 
 

@@ -85,13 +85,13 @@ def verifCadastro(usuario, email, senha):
   return 0
 
 
-def cadastro(usuario, email, senha, tela, labelMensagem):
+def cadastro(usuario, email, senha, labelMensagem):
 
   usuario = usuario.get()
   email = email.get()
   senha = senha.get()
 
-  if displayVerifCadastro(usuario, email, senha, tela, labelMensagem) == 0:
+  if displayVerifCadastro(usuario, email, senha, labelMensagem) == 0:
     conexao = sqlite3.connect('db-loja.db')
     cursor = conexao.cursor()
 
@@ -104,7 +104,7 @@ def cadastro(usuario, email, senha, tela, labelMensagem):
   return 1
 
 
-def displayVerifCadastro(usuario, email, senha, tela, label):
+def displayVerifCadastro(usuario, email, senha, label):
   retornoVerifCadastro = verifCadastro(usuario, email, senha)
 
   if retornoVerifCadastro == 1:

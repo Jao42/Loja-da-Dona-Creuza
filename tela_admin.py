@@ -3,8 +3,8 @@ from tkinter import *
 from produtos import addProdutoTable
 import config
 
-def telaAdmin(tela_login):
-  telaADM = Toplevel(tela_login)
+def telaAdmin():
+  telaADM = Toplevel()
   telaADM.configure(bg=config.COR_BG)
   centralizarTela(telaADM, 600, 500)
 

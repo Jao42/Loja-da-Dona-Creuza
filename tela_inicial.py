@@ -44,13 +44,13 @@ def telaInicial():
       height="2",
       width="30",
       bg="#ffffcc",
-      command=lambda: telaCadastro(tela_inicial)).place(x=260, y=230)
+      command=telaCadastro).place(x=260, y=230)
 
   Button(text="Login",
       height="2",
       width="30",
       bg="#ffffcc",
-      command=lambda: telaLogin(tela_inicial)).place(x=260, y=270)
+      command=telaLogin).place(x=260, y=270)
 
   tela_inicial.mainloop()
 

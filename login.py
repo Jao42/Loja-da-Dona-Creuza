@@ -43,9 +43,11 @@ def displayVerifLogin(email_usuario, senha, tela, label):
     return 2
   label['foreground'] = 'green'
   label['text'] = 'Logado com sucesso!'
+  tela.destroy()
   if email_usuario.get() != 'admin' and email_usuario.get() != 'admin@admin.com':
-    telaProdutos(tela)
+    telaProdutos()
   else:
-    telaAdmin(tela)
+    telaAdmin()
+
   return 0
 

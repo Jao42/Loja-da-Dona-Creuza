@@ -3,8 +3,8 @@ from login import *
 from centralizar_tela import *
 import config
 
-def telaLogin(tela_inicial):
-  tela_login = Toplevel(tela_inicial) 
+def telaLogin():
+  tela_login = Toplevel() 
   tela_login.configure(bg=config.COR_BG)
 
   centralizarTela(tela_login, 600, 500)

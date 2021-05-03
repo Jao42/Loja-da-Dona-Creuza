@@ -1,6 +1,5 @@
 import sqlite3
 
-
 conexao = sqlite3.connect('db-loja.db')
 cursor = conexao.cursor()
 
@@ -9,3 +8,5 @@ print(cursor.fetchall())
 
 conexao.commit()
 conexao.close()
+
+#cursor.execute("DELETE FROM usuarios WHERE usuario != 'admin'")

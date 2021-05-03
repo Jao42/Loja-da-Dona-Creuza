@@ -45,9 +45,14 @@ def displayVerifLogin(email_usuario, senha, tela, label):
   label['text'] = 'Logado com sucesso!'
   tela.destroy()
   if email_usuario.get() != 'admin' and email_usuario.get() != 'admin@admin.com':
-    telaProdutos()
+    conexao = sqlite3.connect('db-loja.db') 
+    cursor = conexao.cursor()
+    cursor.execute(f"SELECT usuario, pontos FROM usuarios WHERE usuario = '{email_usuario.get()}' OR email = '{email_usuario.get()}'")
+    usuario, pontos = cursor.fetchone()
+    conexao.commit()
+    conexao.close()
+    telaProdutos(usuario, pontos)
   else:
     telaAdmin()
-
   return 0
 

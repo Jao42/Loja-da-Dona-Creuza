@@ -6,12 +6,13 @@ import sqlite3
 import config
 
 
-def telaProdutos():
+def telaProdutos(usuario, pontos):
   tela = Toplevel()
   tela.configure(bg=config.COR_BG)
   centralizarTela(tela, 600, 500)
   tela.title('estoque')
 
+  Label(tela, text=f"{usuario} {pontos}", bg=config.COR_BG).pack(anchor=E)
   #relief --> estilo da borda
 
   body = Frame(tela, borderwidth=2, relief='solid') 
@@ -58,6 +59,6 @@ def telaProdutos():
     promocaoLabel['bg'] = config.COR_BG
   tela.mainloop()
 
-
 if __name__ == '__main__':
-  telaProdutos()
+  telaProdutos('romario', 50)
+

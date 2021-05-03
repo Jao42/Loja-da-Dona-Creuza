@@ -96,7 +96,7 @@ def cadastro(usuario, email, senha, labelMensagem):
     cursor = conexao.cursor()
 
     senhaHashed = hashSenha(senha)
-    cursor.execute(f"INSERT INTO usuarios VALUES ('{usuario}', '{email}', '{senhaHashed}')")
+    cursor.execute(f"INSERT INTO usuarios VALUES ('{usuario}', '{email}', '{senhaHashed}', 50)")
     conexao.commit()
     conexao.close()
     return 0

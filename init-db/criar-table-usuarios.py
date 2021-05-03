@@ -5,7 +5,8 @@ cursor = conexao.cursor()
 cursor.execute("""CREATE TABLE usuarios (
     usuario text,
     email text,
-    senha text
+    senha text,
+    pontos integer
 )""")
 
 conexao.commit()

@@ -60,17 +60,40 @@ def rmProdutoTable(tree):
 
   return 1
 
-def comprarProduto(tree):
+def comprarProduto(tree, label_usuario_pontos, usuario):
   itemIID = tree.focus()
   itemValues = tree.item(itemIID)['values']
+
+  nome = itemValues[0]
+  preco = int(itemValues[1])
+  promocao = itemValues[2]
+  conexao = sqlite3.connect("db-loja.db")
+  cursor = conexao.cursor()
+
+  cursor.execute(f"SELECT pontos FROM usuarios WHERE usuario = '{usuario}'")
+  pontos = cursor.fetchone()[0]
+
+  conexao.commit()
+  conexao.close()
+  
+  if promocao:
+    if (pontos - int(promocao)) < 0:
+      return 1
+    novosPontos = descontarPontos(nome, usuario, int(promocao), pontos)
+  
+  if (pontos - preco) < 0:
+    return 1
+
+  novosPontos = descontarPontos(nome, usuario, preco, pontos)
+  label_usuario_pontos['text'] = f'{usuario} --> {novosPontos}'
 
   qtd = int(itemValues[3])
   if qtd == 1:
     rmProdutoTable(tree)   
     return 0
    
-  nome = itemValues[0]
-  preco = itemValues[1]
+  tree.item(itemIID, text="", values=(itemValues[0], itemValues[1], itemValues[2], str(qtd - 1)))
+
   conexao = sqlite3.connect("db-loja.db")
   cursor = conexao.cursor()
   cursor.execute(f"""UPDATE produtos SET quantidade='{qtd - 1}'
@@ -80,7 +103,6 @@ def comprarProduto(tree):
   conexao.commit()
   conexao.close()
 
-  tree.item(itemIID, text="", values=(itemValues[0], itemValues[1], itemValues[2], str(qtd - 1)))
   return 0
 
 
@@ -117,5 +139,18 @@ def tableProdutos(tree, body, horaPromocao):
   tree.pack(side=BOTTOM)
 
   return temProdutoPromocao 
+
+def descontarPontos(produto, usuario, preco, pontos):
+  novosPontos = int(pontos - preco)
+  conexao = sqlite3.connect("db-loja.db")
+  cursor = conexao.cursor()
+  cursor.execute(f"UPDATE usuarios SET pontos = {novosPontos} WHERE usuario = '{usuario}'")
+  conexao.commit()
+  conexao.close()
+  return str(novosPontos)
+
+
+
+
 
 

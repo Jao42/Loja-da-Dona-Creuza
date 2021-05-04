@@ -12,7 +12,8 @@ def telaProdutos(usuario, pontos):
   centralizarTela(tela, 600, 500)
   tela.title('estoque')
 
-  Label(tela, text=f"{usuario} {pontos}", bg=config.COR_BG).pack(anchor=E)
+  label_usuario_pontos = Label(tela, text=f"{usuario} --> {pontos}", bg=config.COR_BG)
+  label_usuario_pontos.pack(anchor=E)
   #relief --> estilo da borda
 
   body = Frame(tela, borderwidth=2, relief='solid') 
@@ -49,7 +50,7 @@ def telaProdutos(usuario, pontos):
   horaPromocao = promocao(8, 18)
   temProdutoPromocao = tableProdutos(tree, body, horaPromocao)
 
-  Button(tela, text="COMPRAR", command=lambda:comprarProduto(tree)).pack(side=BOTTOM)
+  Button(tela, text="COMPRAR", command = lambda:comprarProduto(tree, label_usuario_pontos, usuario)).pack(side=BOTTOM)
   
   promocaoLabel = Label(tela, bg=config.COR_BG)
   promocaoLabel.pack()
@@ -58,7 +59,4 @@ def telaProdutos(usuario, pontos):
     promocaoLabel['fg'] = 'blue'
     promocaoLabel['bg'] = config.COR_BG
   tela.mainloop()
-
-if __name__ == '__main__':
-  telaProdutos('romario', 50)
 

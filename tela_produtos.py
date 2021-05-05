@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 from centralizar_tela import centralizarTela
+from tela_minigame import telaMinigame
 from produtos import tableProdutos, comprarProduto, promocao
 import sqlite3
 import config
@@ -12,8 +13,11 @@ def telaProdutos(usuario, pontos):
   centralizarTela(tela, 600, 500)
   tela.title('estoque')
 
-  label_usuario_pontos = Label(tela, text=f"{usuario} --> {pontos}", bg=config.COR_BG)
-  label_usuario_pontos.pack(anchor=E)
+  label_usuario_pontos = Label(tela, text=f"{usuario} --> {pontos}", bg=config.COR_BG, width=20)
+  botaoMinigame = Button(tela, text='GANHAR PONTOS', width=15, command= lambda:telaMinigame(usuario, label_usuario_pontos))
+  botaoMinigame.pack(anchor=W)
+  label_usuario_pontos.pack()
+
   #relief --> estilo da borda
 
   body = Frame(tela, borderwidth=2, relief='solid') 
@@ -59,4 +63,5 @@ def telaProdutos(usuario, pontos):
     promocaoLabel['fg'] = 'blue'
     promocaoLabel['bg'] = config.COR_BG
   tela.mainloop()
+
 

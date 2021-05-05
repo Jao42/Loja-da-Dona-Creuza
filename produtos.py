@@ -3,6 +3,7 @@ from tkinter import *
 from tkinter import ttk
 from time import localtime
 from math import ceil
+from operacoes_db import atualizarPontos
 
 def createTableProdutos():
   conexao = sqlite3.connect("db-loja.db")
@@ -79,12 +80,15 @@ def comprarProduto(tree, label_usuario_pontos, usuario):
   if promocao:
     if (pontos - int(promocao)) < 0:
       return 1
-    novosPontos = descontarPontos(nome, usuario, int(promocao), pontos)
-  
-  if (pontos - preco) < 0:
-    return 1
+    novosPontos = pontos - int(promocao)
+    atualizarPontos(usuario, novosPontos)
 
-  novosPontos = descontarPontos(nome, usuario, preco, pontos)
+  else:
+    if (pontos - preco) < 0:
+      return 1 
+    novosPontos = pontos - preco
+    atualizarPontos(usuario, novosPontos)
+
   label_usuario_pontos['text'] = f'{usuario} --> {novosPontos}'
 
   qtd = int(itemValues[3])
@@ -105,15 +109,12 @@ def comprarProduto(tree, label_usuario_pontos, usuario):
 
   return 0
 
-
-  
 def promocao(inicio, fim):
   hora = localtime().tm_hour
   if hora >= inicio and hora < fim:
     return 1
   else:
     return 0
-
 
 def tableProdutos(tree, body, horaPromocao):
   conexao = sqlite3.connect("db-loja.db")
@@ -139,18 +140,3 @@ def tableProdutos(tree, body, horaPromocao):
   tree.pack(side=BOTTOM)
 
   return temProdutoPromocao 
-
-def descontarPontos(produto, usuario, preco, pontos):
-  novosPontos = int(pontos - preco)
-  conexao = sqlite3.connect("db-loja.db")
-  cursor = conexao.cursor()
-  cursor.execute(f"UPDATE usuarios SET pontos = {novosPontos} WHERE usuario = '{usuario}'")
-  conexao.commit()
-  conexao.close()
-  return str(novosPontos)
-
-
-
-
-
-

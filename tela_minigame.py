@@ -5,11 +5,10 @@ from minigame import aumentarProgresso
 
 def telaMinigame(usuario, labelProdutos):
   tela = Toplevel()
-  tela.geometry("800x600")
+  tela.geometry("600x500")
 
-  voltar = Button(text='<--')
-  voltar.pack(anchor=NW)
-
+  task = Label(tela, text="Ajude a Dona Creuza com as compras!", pady=50)
+  task.pack()
   progresso = ttk.Progressbar(tela, orient=HORIZONTAL,length=200,mode='determinate')
   progresso.pack()
   labelPontos = Label(tela, text='')

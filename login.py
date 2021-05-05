@@ -29,7 +29,6 @@ def verifLogin(email_usuario, senha):
   
   return 2
 
-
 def displayVerifLogin(email_usuario, senha, tela, label):
   verifRetorno = verifLogin(email_usuario, senha)
 

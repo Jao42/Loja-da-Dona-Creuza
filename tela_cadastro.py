@@ -1,6 +1,5 @@
 from tkinter import *
-from tela_login import*
-from cadastro import *
+from botoes import botaoCadastro, checkboxCadastro
 import config
 
 def telaCadastro():
@@ -74,7 +73,7 @@ def telaCadastro():
     bg=config.COR_BG2,
     height=2,
     width=20,
-    command=lambda: cadastro(user, email, senha, label_mensagem))
+    command=lambda: botaoCadastro(tela_cadastro, label_mensagem, user, email, senha))
 
   bnt1.place(x=160, y=480)
 
@@ -87,8 +86,8 @@ def telaCadastro():
       bg=config.COR_BG,
       fg=config.COR_BG3,
       font='Arial 12 bold',
-      command=telaLogin
-    ).place(x=165, y=535)
-
+      command=lambda:checkboxCadastro(tela_cadastro)
+    )
+  ja_cadastrado.place(x=165, y=535)
   tela_cadastro.mainloop()
 

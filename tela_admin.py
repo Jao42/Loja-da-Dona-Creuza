@@ -1,5 +1,6 @@
 from centralizar_tela import *
 from tkinter import *
+from admin import admin
 from produtos import addProdutoTable
 import config
 
@@ -58,12 +59,17 @@ def telaAdmin():
   labelQuantidade.place(x=60, y=390)
   entryQuantidade.place(x=60, y=420, width=400, height=25)
 
-
+  entradas = [entryNome, entryPreco, entryQuantidade]
   labelMensagem = Label(Right, bg=config.COR_BG)
   labelMensagem.place(x=200, y=10)
 
   Button(Right, text="Adicionar produto",font='Arial 12', height=2, width=20,
-         command=lambda: addProdutoTable(nomeProduto.get(), int(precoProduto.get()), int(quantProduto.get()), labelMensagem)).place(x=150, y=470)
+         command=lambda: admin(nomeProduto.get(),
+           int(precoProduto.get()),
+           int(quantProduto.get()),
+           labelMensagem,
+           entradas)
+         ).place(x=150, y=470)
 
   telaADM.mainloop()
 

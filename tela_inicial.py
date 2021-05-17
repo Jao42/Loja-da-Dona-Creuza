@@ -9,6 +9,8 @@ def telaInicial():
   tela_inicial = Tk()
   tela_inicial.geometry('1366x768')
 
+  tela_inicial.resizable(False, False)
+
   tela_inicial.title("Lojinha da Dona Creuza :)")
   tela_inicial.configure(bg=config.COR_BG)
 

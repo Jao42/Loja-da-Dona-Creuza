@@ -7,6 +7,7 @@ def telaLogin():
   tela_login.configure(bg=config.COR_BG2)
   tela_login.title("Login")
   tela_login.geometry('1366x768')
+  tela_login.resizable(False, False)
 
   # CRIANDO FRAME DA ESQUERDA
   Left = Frame(tela_login, width=650, height=900, bg=config.COR_BG3)
@@ -45,6 +46,7 @@ def telaLogin():
   label_senha = Label(Right, text='DIGITE SUA SENHA:', font='Arial 14', bg=config.COR_BG, fg=config.COR_BG3)
   email_usuario_entrada = Entry(Right, textvariable=email_usuario)
   senha_entrada = Entry(Right, textvariable=senha, show="*")
+  email_usuario_entrada.focus()
 
   label_email_usuario.place(x=60, y=285)
   email_usuario_entrada.place(x=60, y=315, width=400, height=25)

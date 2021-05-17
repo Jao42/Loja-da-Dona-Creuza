@@ -8,6 +8,8 @@ def telaCadastro():
   tela_cadastro.geometry('1366x768')
   tela_cadastro.title("Cadastro")
 
+  tela_cadastro.resizable(False, False)
+
   email = StringVar()
   user = StringVar()
   senha = StringVar()
@@ -50,6 +52,7 @@ def telaCadastro():
   email_entrada = Entry(Right, textvariable=email, width="40")
   user_entrada = Entry(Right, textvariable=user, width="25")
   senha_entrada = Entry(Right, textvariable=senha, width="25", show="*")
+  email_entrada.focus()
 
   label_email.place(x=60, y=220)
   email_entrada.place(x=60, y=270, width=400, height=25)

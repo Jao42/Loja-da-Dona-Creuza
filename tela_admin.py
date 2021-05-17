@@ -10,6 +10,8 @@ def telaAdmin():
   telaADM.configure(bg=config.COR_BG2)
   telaADM.geometry('1366x768')
 
+  telaADM.resizable(False, False)
+
   # CRIANDO FRAME A ESQUERDA
   Left = Frame(telaADM, width=700, height=768, bg=config.COR_BG3)
   Left.pack(side=LEFT)
@@ -51,6 +53,7 @@ def telaAdmin():
   entryNome = Entry(Right, textvariable=nomeProduto)
   entryPreco = Entry(Right, textvariable=precoProduto)
   entryQuantidade = Entry(Right, textvariable=quantProduto)
+  entryNome.focus()
 
   labelNome.place(x=60, y=250)
   entryNome.place(x=60, y=280, width=400, height=25)

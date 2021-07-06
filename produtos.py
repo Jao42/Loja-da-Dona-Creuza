@@ -76,7 +76,7 @@ def comprarProduto(tree, label_usuario_pontos, usuario):
 
   conexao.commit()
   conexao.close()
-  
+
   if promocao:
     if (pontos - int(promocao)) < 0:
       return 1
@@ -85,7 +85,7 @@ def comprarProduto(tree, label_usuario_pontos, usuario):
 
   else:
     if (pontos - preco) < 0:
-      return 1 
+      return 1
     novosPontos = pontos - preco
     atualizarPontos(usuario, novosPontos)
 
@@ -93,16 +93,15 @@ def comprarProduto(tree, label_usuario_pontos, usuario):
 
   qtd = int(itemValues[3])
   if qtd == 1:
-    rmProdutoTable(tree)   
+    rmProdutoTable(tree)
     return 0
-   
+
   tree.item(itemIID, text="", values=(itemValues[0], itemValues[1], itemValues[2], str(qtd - 1)))
 
   conexao = sqlite3.connect("db-loja.db")
   cursor = conexao.cursor()
   cursor.execute(f"""UPDATE produtos SET quantidade='{qtd - 1}'
         WHERE nome='{nome}' AND preco='{preco}' AND quantidade='{qtd}'
-      
       """)
   conexao.commit()
   conexao.close()
@@ -139,4 +138,4 @@ def tableProdutos(tree, body, horaPromocao):
   body.pack()
   tree.pack(side=BOTTOM)
 
-  return temProdutoPromocao 
+  return temProdutoPromocao

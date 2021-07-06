@@ -5,7 +5,6 @@ from tela_minigame import telaMinigame
 from produtos import tableProdutos, comprarProduto, promocao
 import config
 
-
 def telaProdutos(usuario, pontos):
   tela = Toplevel()
   tela.configure(bg=config.COR_BG)
@@ -21,13 +20,19 @@ def telaProdutos(usuario, pontos):
   lblimg2 = Label(tela, image=img2, bg=config.COR_BG)
   lblimg2.place(x=665, y=370)
 
-  label_usuario_pontos = Label(tela, text=f"{usuario} → {pontos}", font='Arial 15 bold', bg=config.COR_BG, width=20)
+  label_usuario_pontos = Label(
+    tela,
+    text=f"{usuario} → {pontos}",
+    font='Arial 15 bold',
+    bg=config.COR_BG,
+    width=20
+  )
 
   botaoMinigame = Button(
       tela,
       text='GANHAR PONTOS',
       font='Arial 12',
-      height=2, 
+      height=2,
       width=20,
       command=lambda: telaMinigame(usuario, label_usuario_pontos))
 
@@ -36,7 +41,7 @@ def telaProdutos(usuario, pontos):
 
   #relief --> estilo da borda
 
-  body = Frame(tela, borderwidth=2, relief='solid') 
+  body = Frame(tela, borderwidth=2, relief='solid')
   body.pack(side=TOP)
   tabelaItems = ['nome', 'preco', 'promocao', 'qtd']
 
@@ -78,11 +83,12 @@ def telaProdutos(usuario, pontos):
       command=lambda: comprarProduto(tree, label_usuario_pontos, usuario))
 
   comprarButton.place(x=700, y=600)
-  
+
   promocaoLabel = Label(tela, bg=config.COR_BG)
   promocaoLabel.pack()
   if horaPromocao and temProdutoPromocao:
-    promocaoLabel['text'] = 'PROMOÇÃO! Produtos com mais de 20% de desconto!'
+    promocaoLabel['text'] = 'PROMOÇÃO!' +
+      ' Produtos com mais de 20% de desconto!'
     promocaoLabel['fg'] = 'blue'
     promocaoLabel['bg'] = config.COR_BG
   tela.mainloop()

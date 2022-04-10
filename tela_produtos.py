@@ -87,8 +87,7 @@ def telaProdutos(usuario, pontos):
   promocaoLabel = Label(tela, bg=config.COR_BG)
   promocaoLabel.pack()
   if horaPromocao and temProdutoPromocao:
-    promocaoLabel['text'] = 'PROMOÇÃO!' +
-      ' Produtos com mais de 20% de desconto!'
+    promocaoLabel['text'] = 'PROMOÇÃO!' + ' Produtos com mais de 20% de desconto!'
     promocaoLabel['fg'] = 'blue'
     promocaoLabel['bg'] = config.COR_BG
   tela.mainloop()
